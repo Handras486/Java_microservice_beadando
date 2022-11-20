@@ -1,0 +1,23 @@
+<db:databaseChangeLog xmlns:db="http://www.liquibase.org/xml/ns/dbchangelog"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <db:changeSet id="create-table-from-object" author="andras">
+        <db:createTable tableName="comment">
+            <db:column name="id" type="BIGINT"></db:column>
+            <db:column name="author" type="varchar(255)"  ></db:column>
+            <db:column name="content" type="varchar(255)"  ></db:column>
+            <db:column name="pinned" type="boolean"  ></db:column>
+        </db:createTable>
+        <db:createIndex tableName="comment" indexName="comment-id">
+            <db:column name="id"></db:column>
+        </db:createIndex>
+    </db:changeSet>
+    
+    <db:changeSet id="hibernate_sequences" author="andras">
+        <db:createTable tableName="hibernate_sequences">
+            <db:column name="sequence_name" type="varchar(255)"  ></db:column>
+            <db:column name="next_val" type="BIGINT"  ></db:column>                      
+        </db:createTable>
+    </db:changeSet>
+
+</db:databaseChangeLog>

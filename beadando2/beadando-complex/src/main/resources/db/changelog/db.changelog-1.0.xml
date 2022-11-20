@@ -1,0 +1,77 @@
+<db:databaseChangeLog xmlns:db="http://www.liquibase.org/xml/ns/dbchangelog"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <db:changeSet id="create-table-from-object" author="andras">
+        <db:createTable tableName="post">
+            <db:column name="id" type="BIGINT"></db:column>
+            <db:column name="title" type="varchar(255)"  ></db:column>
+            <db:column name="description" type="varchar(255)"  ></db:column>
+            <db:column name="date" type="timestamp"  ></db:column>
+            <db:column name="topic_id" type="BIGINT"></db:column>
+        </db:createTable>
+        <db:createIndex tableName="post" indexName="post-id">
+            <db:column name="id"></db:column>
+        </db:createIndex>
+        
+        <db:createTable tableName="topic">
+            <db:column name="id" type="BIGINT"></db:column>
+            <db:column name="name" type="varchar(255)"  ></db:column>
+            <db:column name="description" type="varchar(255)"  ></db:column>
+            <db:column name="date" type="timestamp"  ></db:column>
+        </db:createTable>
+        <db:createIndex tableName="topic" indexName="topic-id">
+            <db:column name="id"></db:column>
+        </db:createIndex>
+
+    </db:changeSet>
+    
+    <db:changeSet id="hibernate_sequences" author="andras">
+        <db:createTable tableName="hibernate_sequences">
+            <db:column name="sequence_name" type="varchar(255)"  ></db:column>
+            <db:column name="next_val" type="BIGINT"  ></db:column>                      
+        </db:createTable>
+    </db:changeSet>
+    
+    <db:changeSet id="init-data" author="andras">
+        <db:preConditions onFail="MARK_RAN">
+            <db:sqlCheck expectedResult="0">
+                SELECT count(0) FROM topic WHERE name='News'
+            </db:sqlCheck>
+        </db:preConditions>        
+        <db:insert tableName="topic">
+            <db:column name="id" value="1"></db:column>
+            <db:column name="name" value="Sport"></db:column>
+            <db:column name="description" value="Sport leírás"></db:column>
+            <db:column name="date" value="2022-10-10T10:00:10"></db:column>
+        </db:insert>
+        <db:insert tableName="topic">
+            <db:column name="id" value="2"></db:column>
+            <db:column name="name" value="Hírek"></db:column>
+            <db:column name="description" value="Hírek leírás"></db:column>
+            <db:column name="date" value="2022-10-10T10:00:10"></db:column>
+        </db:insert>
+        <db:insert tableName="topic">
+            <db:column name="id" value="3"></db:column>
+            <db:column name="name" value="Kultúra"></db:column>
+            <db:column name="description" value="Kultúra leírás"></db:column>
+            <db:column name="date" value="2022-10-10T10:00:10"></db:column>
+        </db:insert>
+        <db:createTable tableName="tableimage">
+            <db:column name="id" type="varchar(255)"  >
+                <db:constraints nullable="false"/>
+            </db:column>
+            <db:column name="create" type="timestamp"  ></db:column>
+            <db:column name="lastmodify" type="timestamp"  ></db:column>
+            <db:column name="url" type="varchar(255)"  ></db:column>
+        </db:createTable>
+        <db:insert tableName="hibernate_sequences">
+            <db:column name="sequence_name" value="default"></db:column>
+            <db:column name="next_val" value="3"></db:column>
+        </db:insert>
+
+    </db:changeSet>
+    
+    
+    
+        
+</db:databaseChangeLog>
